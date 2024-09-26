@@ -1,0 +1,5 @@
+﻿# acessar a pasta SolarCoffee\backend\SolarCoffee.Infrastructure e rodar a migration:
+dotnet ef --startup-project ../SolarCoffee.API migrations add InitialMigration
+
+# update migration
+dotnet ef --startup-project ../SolarCoffee.API database update

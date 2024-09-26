@@ -1,6 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using SolarCoffee.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// configurando postgresql
+builder.Services.AddDbContext<SolarDbContext>(opts =>
+{
+    opts.EnableDetailedErrors();
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("solar.dev"));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
