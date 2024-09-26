@@ -7,7 +7,7 @@ REPO_NAME ?= SolarCoffee
 .PHONY: migrations db
 
 migrations:
-	cd ./SolarCoffee.Infrastructure && dotnet ef --startup-project ../SolarCoffee.API migrations add $(mname) && cd ..
+	cd ./backend/SolarCoffee.Infrastructure && dotnet ef --startup-project ../SolarCoffee.API migrations add $(mname) && cd ../..
 
 db:
-	cd ./SolarCoffee.Infrastructure && dotnet ef --startup-project ../SolarCoffee.API database update && cd ..
+	cd ./backend/SolarCoffee.Infrastructure && dotnet ef --startup-project ../SolarCoffee.API database update && cd ../..

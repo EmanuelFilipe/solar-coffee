@@ -1,8 +1,7 @@
 namespace SolarCoffee.Infrastructure.Models
 {
-    public class Customer
+    public class Customer : BaseEntity
     {
-        public int Id { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
         public string FirstName { get; set; }
