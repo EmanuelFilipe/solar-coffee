@@ -1,3 +1,6 @@
+# for running this commands you must have stay on SLN directory
+# and have using the powershell in administrator mode
+
 # Project Variables
 PROJECT_NAME ?= SolarCoffee
 ORG_NAME ?= SolarCoffee

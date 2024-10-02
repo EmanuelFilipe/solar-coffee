@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolarCoffee.Services", "bac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolarCoffee.Test", "backend\SolarCoffee.Test\SolarCoffee.Test.csproj", "{F4DB13E5-70D7-4DD2-805C-45FFE655B651}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarCoffee.API", "backend\SolarCoffee.API\SolarCoffee.API.csproj", "{C2612ABE-FF71-44DB-B28A-7639E0E7B470}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolarCoffee.API", "backend\SolarCoffee.API\SolarCoffee.API.csproj", "{C2612ABE-FF71-44DB-B28A-7639E0E7B470}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarCoffee.Application", "backend\SolarCoffee.Application\SolarCoffee.Application.csproj", "{E147AF61-7594-4ED0-9353-1F0F2C2F9B7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{C2612ABE-FF71-44DB-B28A-7639E0E7B470}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2612ABE-FF71-44DB-B28A-7639E0E7B470}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2612ABE-FF71-44DB-B28A-7639E0E7B470}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E147AF61-7594-4ED0-9353-1F0F2C2F9B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E147AF61-7594-4ED0-9353-1F0F2C2F9B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E147AF61-7594-4ED0-9353-1F0F2C2F9B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E147AF61-7594-4ED0-9353-1F0F2C2F9B7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,5 +50,6 @@ Global
 		{BFD6A879-3300-495D-B3D1-6D6831EFDA87} = {0DAA8E7E-7883-4B9E-925F-CEBB8DF0DDA3}
 		{F4DB13E5-70D7-4DD2-805C-45FFE655B651} = {0DAA8E7E-7883-4B9E-925F-CEBB8DF0DDA3}
 		{C2612ABE-FF71-44DB-B28A-7639E0E7B470} = {0DAA8E7E-7883-4B9E-925F-CEBB8DF0DDA3}
+		{E147AF61-7594-4ED0-9353-1F0F2C2F9B7A} = {0DAA8E7E-7883-4B9E-925F-CEBB8DF0DDA3}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,6 @@
+refatoração:
+- aplicar arquitetura limpa
+- cqrs
+- mediatr
+- async
+- unity of work (productService tem multipos .add())
