@@ -7,5 +7,6 @@ namespace SolarCoffee.Infrastructure.Models
         public int QuantityOnHand { get; set; }
         public int IdealQuantity { get; set; }
         public Product Product { get; set; }
+        public bool IsArchived { get; set; }
     }
 }
