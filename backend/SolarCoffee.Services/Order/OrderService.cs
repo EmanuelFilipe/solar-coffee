@@ -15,7 +15,7 @@ namespace SolarCoffee.Services.Order
         private readonly IInventoryService _inventoryService;
        
         public OrderService(SolarDbContext context, ILogger<OrderService> logger, 
-                            ProductService productService, IInventoryService inventoryService)
+                            IProductService productService, IInventoryService inventoryService)
         {
             _context = context;
             _logger = logger;
@@ -77,9 +77,38 @@ namespace SolarCoffee.Services.Order
             }
         }
 
+        /// <summary>
+        /// Marks an open SalesOrder as paid
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ServiceResponse<bool> MarkFulfilled(int id)
         {
-            throw new NotImplementedException();
+            var order = _context.SalesOrders.Find(id);
+            order.UpdatedOn = DateTime.UtcNow;
+            order.IsPaid = true;
+
+            try
+            {
+                _context.SalesOrders.Update(order);
+                _context.SaveChanges();
+
+                return new ServiceResponse<bool> {
+                    Data = true,
+                    Time = DateTime.UtcNow,
+                    Message = $"Order {order.Id} closed: Invoice paid in full.",
+                    IsSuccess = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<bool> {
+                    Data = false,
+                    Time = DateTime.UtcNow,
+                    Message = $"Message: {ex.Message} \n StackTrace: {ex.StackTrace}",
+                    IsSuccess = false
+                };
+            }
         }
     }
 }

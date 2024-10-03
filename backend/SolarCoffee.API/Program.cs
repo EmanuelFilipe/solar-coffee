@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using SolarCoffee.Infrastructure.Persistence;
 using SolarCoffee.Services.Customer;
 using SolarCoffee.Services.Inventory;
