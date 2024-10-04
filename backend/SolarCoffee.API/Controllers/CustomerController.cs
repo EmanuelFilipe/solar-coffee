@@ -34,6 +34,7 @@ namespace SolarCoffee.API.Controllers
 
             var customerModels = customers.Select(c => new CustomerModel 
             {
+                Id = c.Id,
                 FirstName = c.FirstName,
                 LastName = c.LastName,
                 PrimaryAddress = CustomerMapper.MapCustomerAddress(c.PrimaryAddress),

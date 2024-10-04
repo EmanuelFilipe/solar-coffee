@@ -23,6 +23,16 @@ namespace SolarCoffee.API.Controllers
             _customerService = customerService;
         }
 
+        [HttpGet]
+        public IActionResult GetOrders()
+        {
+            _logger.LogInformation("Getting all orders");
+            var orders = _orderService.GetOrders();
+            var orderModel = OrderMapper.SerializeOrdersToViewModels(orders);
+            return Ok(orderModel);
+            
+        }
+
         [HttpPost("/invoice")]
         public IActionResult GenerateNewOrder([FromBody] InvoiceModel invoice)
         {
@@ -32,6 +42,14 @@ namespace SolarCoffee.API.Controllers
             _orderService.GenerateOpenOrder(order);
             return Ok(order);
         }
-        
+
+        [HttpPatch("/complete/{id}:int")]
+        public IActionResult MarkOrderComplete(int id)
+        {
+            _logger.LogInformation($"Marking order {id} complete...");
+            _orderService.MarkFulfilled(id);
+            return Ok();
+        }
+
     }
 }

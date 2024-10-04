@@ -1,5 +1,5 @@
 # for running this commands you must have stay on SLN directory
-# and have using the powershell in administrator mode
+# and have using the powershell in ADMINISTRATOR mode
 
 # Project Variables
 PROJECT_NAME ?= SolarCoffee

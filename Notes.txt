@@ -6,3 +6,15 @@ refatoração:
 - unity of work (productService tem multipos .add())
 
 - https://localhost:7079/swagger/index.html
+
+- como executar o makefile:
+
+
+para rodar esses comandos, deve estar no diretório acima de 'backend'	
+
+- rodando migrations
+make migrations mname=name-migration
+ex: make migrations mname=ProductInventorySales
+
+- rodando db -> que é o update
+make db
