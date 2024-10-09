@@ -36,7 +36,7 @@ namespace SolarCoffee.Services.Inventory
         public List<ProductInventory> GetCurrentInventory()
         {
             return _context.ProductInventories.Include(pi => pi.Product)
-                                              .Where(pi => !pi.IsArchived)
+                                              .Where(pi => !pi.Product.IsArchived)
                                               .ToList();
         }
 

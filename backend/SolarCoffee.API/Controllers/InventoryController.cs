@@ -18,6 +18,7 @@ namespace SolarCoffee.API.Controllers
             _logger = logger;
             _inventoryService = inventoryService;
         }
+
         [HttpGet]
         public IActionResult GetCurrentInventory()
         {
@@ -38,6 +39,9 @@ namespace SolarCoffee.API.Controllers
         [HttpPatch]
         public IActionResult UpdateInventory([FromBody] ShipmentModel shipment)
         {
+            if (!ModelState.IsValid)
+               return BadRequest(ModelState);
+
             _logger.LogInformation($"Updating inventoty \n " +
                                    $"for {shipment.ProductId} - Adjustment: {shipment.Adjustment}"); 
             

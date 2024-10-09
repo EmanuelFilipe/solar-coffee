@@ -50,9 +50,12 @@ namespace SolarCoffee.API.Controllers
         [HttpPost()]
         public IActionResult CreateCustomer([FromBody] CustomerModel customer)
         {
-            _logger.LogInformation("Generating invoice");
-
             if (customer is null) return BadRequest();
+            
+            if (!ModelState.IsValid)
+               return BadRequest(ModelState);
+               
+            _logger.LogInformation("Generating invoice");
 
             customer.CreatedOn = DateTime.UtcNow;
             customer.UpdatedOn = DateTime.UtcNow;
