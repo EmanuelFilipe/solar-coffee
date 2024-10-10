@@ -4,10 +4,10 @@
     <hr />
 
     <div id="inventory-actions">
-      <solar-button id="addNewItem" @click.native="showNewProductModal">
+      <solar-button id="addNewItem" @button:click="showNewProductModal">
         Add New Item
       </solar-button>
-      <solar-button id="receiveShipmentModal" @click.native="showShipmentModal">
+      <solar-button id="receiveShipmentModal" @button:click="showShipmentModal">
         Receive Shipment
       </solar-button>
     </div>
@@ -26,7 +26,7 @@
           <td>
             {{ item.product.name }}
           </td>
-          <td>
+          <td :class="`${applyColor(item)}`">
             {{ item.quantityOnHand }}
           </td>
           <td>
@@ -36,7 +36,10 @@
             {{ item.product.isTaxable ? "Yes" : "No" }}
           </td>
           <td>
-            <div>X</div>
+            <div class="lni lni-cross-circle delete-item"
+              @click="archiveProduct(item.product.id)"
+            >
+            </div>
           </td>
         </tr>
       </tbody>
@@ -61,7 +64,12 @@ import { Component, Vue } from "vue-property-decorator";
 import SolarButton from "../components/SolarButton.vue";
 import NewProductModal from "../components/modals/NewProductModel.vue";
 import ShipmentModal from "../components/modals/ShipmentModal.vue";
-import { IShipment } from "@/types/Shipment";
+import { IShipment } from "../types/Shipment";
+import { InventoryService } from '../../services/inventory-service'
+import { ProductService } from '../../services/product-service'
+
+const inventoryService = new InventoryService()
+const productService = new ProductService()
 
 @Component({
   name: "Inventory",
@@ -75,38 +83,7 @@ export default class Inventory extends Vue {
   isNewProductVisible: boolean = false;
   isShipmentVisible: boolean = false;
 
-  inventory: IProductInventory[] = [
-    {
-      id: 1,
-      product: {
-        id: 1,
-        name: "Some product",
-        description: "Good stuff",
-        price: 100,
-        createdOn: new Date(),
-        updatedOn: new Date(),
-        isTaxable: true,
-        isArchived: false,
-      },
-      quantityOnHand: 100,
-      idealQuantity: 100,
-    },
-    {
-      id: 2,
-      product: {
-        id: 2,
-        name: "Another product",
-        description: "AnotherGood stuff",
-        price: 100,
-        createdOn: new Date(),
-        updatedOn: new Date(),
-        isTaxable: false,
-        isArchived: false,
-      },
-      quantityOnHand: 40,
-      idealQuantity: 20,
-    },
-  ];
+  inventory: IProductInventory[] = []
 
   closeModals() {
     this.isShipmentVisible = false;
@@ -121,16 +98,64 @@ export default class Inventory extends Vue {
     this.isShipmentVisible = true
   }
 
-  saveNewProduct(newProduct: IProduct) {
-    console.log('saveNewProduct:', newProduct)
+  applyColor(item: IProductInventory): string {
+    if (item.quantityOnHand <= 0) 
+      return 'red'
+
+    if (Math.abs(item.idealQuantity - item.quantityOnHand) > 8)
+      return 'yellow'
+
+    return 'green'
   }
 
-  saveNewShipment(shipment: IShipment) {
-    console.log('savenewShipment:', shipment)
+  async archiveProduct(productId: number) {
+    await productService.archive(productId);
+    await this.initialize()
+  }
+
+  async saveNewProduct(newProduct: IProduct) {
+    await productService.save(newProduct)
+    this.isNewProductVisible = false
+    await this.initialize()
+  }
+
+  async saveNewShipment(shipment: IShipment) {
+    await inventoryService.updateInventoryQuantity(shipment);
+    this.isShipmentVisible = false
+    await this.initialize();
+  }
+
+  async initialize() {
+    this.inventory = await inventoryService.getInventory()
+  }
+
+  async created() {
+    await this.initialize()
   }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/scss/global.scss";
+
+.green {
+  font-weight: bold;
+  color: $solar-green;
+}
+
+.yellow {
+  font-weight: bold;
+  color: $solar-yellow;
+}
+
+.red {
+  font-weight: bold;
+  color: $solar-red;
+}
+
+#inventory-actions {
+  display: flex !important;
+  margin-bottom: 0.8rem;
+}
+
 </style>
