@@ -3,6 +3,7 @@
         <button 
             @click="onClick"
             :class="['solar-button', {'full-width': isFullWidth}]"
+            :disabled="disabled"
             type="button"
             >
             <slot></slot>
@@ -23,6 +24,8 @@
         @Prop({ required: false, type: Boolean, default: false })
         isFullWidth?: boolean;
 
+        @Prop({ required: false, type: Boolean, default: false })
+        disabled?: boolean;
 
         onClick() {
             this.$emit('button:click')
