@@ -7,7 +7,11 @@
       <h2>Step 1: Select Customer</h2>
       <div v-if="customers.length" class="invoice-step-detail">
         <label for="customer">Customer:</label>
-        <select id="customer" class="invoice-customers" v-model="selectedCustomerId">
+        <select
+          id="customer"
+          class="invoice-customers"
+          v-model="selectedCustomerId"
+        >
           <option disabled value="">Please select a Customer</option>
           <option v-for="c in customers" :key="c.id" :value="c.id">
             {{ c.firstName + " " + c.lastName }}
@@ -73,7 +77,81 @@
       </div>
     </div>
     <div class="invoice-step" v-if="invoiceStep === 3">
+      <h2>Step 3: Review and Submit</h2>
+      <solar-button type="button" @button:click="submitInvoice">Submit Invoice</solar-button>
+      <hr />
 
+      <div class="invoice-step-detail" id="invoice" ref="invoice">
+        <div class="invoice-logo">
+          <img
+            id="imgLogo"
+            alt="Solar Coffee logo"
+            src="@/assets/images/solar_coffee_logo.png"
+          />
+          <h3>1337 Solar Lane</h3>
+          <h3>San Somewhere, CA 90000</h3>
+          <h3>USA</h3>
+
+          <div class="invoice-order-list" v-if="lineItems.length">
+            <div class="invoice-header">
+              <h3>Invoice: {{ new Date() | formatDate }}</h3>
+              <h3>
+                Customer:
+                {{
+                  this.selectedCustomer?.firstName +
+                  " " +
+                  this.selectedCustomer?.lastName
+                }}
+              </h3>
+              <h3>
+                Address:
+                {{ this.selectedCustomer?.primaryAddress.addressLine1 }}
+              </h3>
+              <h3 v-if="this.selectedCustomer?.primaryAddress.addressLine2">
+                {{ this.selectedCustomer.primaryAddress.addressLine2 }}
+              </h3>
+              <h3>
+                {{ this.selectedCustomer?.primaryAddress.city }},
+                {{ this.selectedCustomer?.primaryAddress.state }},
+                {{ this.selectedCustomer?.primaryAddress.postalCode }}
+              </h3>
+              <h3>
+                {{ this.selectedCustomer?.primaryAddress.country }}
+              </h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <th>Product</th>
+                    <th>Description</th>
+                    <th>Qty.</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </thead>
+                <tbody>
+                    <tr v-for="li in lineItems" :key="`index_${li?.product?.id}`">
+                        <td>{{ li?.product?.name }}</td>
+                        <td>{{ li?.product?.description }}</td>
+                        <td>{{ li.quantity }}</td>
+                        <td>{{ li?.product?.price }}</td>
+                        <td>
+                          {{ ((li?.product?.price ?? 0) * Number(li.quantity)) | price }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="4"></th>
+                        <th>Grand Total</th>
+                    </tr>
+                    <tfoot>
+                        <tr>
+                          <td colspan="4" class="due">Balance due upon receipt:</td>
+                          <td class="price-final">{{ runningTotal | price }}</td>
+                        </tr>
+                    </tfoot>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
     <hr />
     <div class="invoice-steps-actions">
@@ -94,14 +172,14 @@ import { IInvoice, ILineItem } from "../types/Invoice";
 import { IProductInventory } from "@/types/Product";
 import { CustomerService } from "../../services/customer-service";
 import { InventoryService } from "../../services/inventory-service";
-/*import { InvoiceService } from "../../services/invoice-service"*/
+import { InvoiceService } from "../../services/invoice-service";
 import { Component, Vue } from "vue-property-decorator";
 import SolarButton from "@/components/SolarButton.vue";
 import FiltersMixin from "../mixins/filters";
 
 const customerService = new CustomerService();
 const inventoryService = new InventoryService();
-/*const invoiceService = new InvoiceService()*/
+const invoiceService = new InvoiceService();
 
 @Component({
   name: "CreateInvoice",
@@ -153,6 +231,10 @@ export default class CreateInvoice extends Vue {
       }
       return total;
     }, 0);
+  }
+
+  get selectedCustomer() {
+    return this.customers.find((c) => c.id === this.selectedCustomerId);
   }
 
   prev(): void {
@@ -216,11 +298,19 @@ export default class CreateInvoice extends Vue {
     };
   }
 
+  async submitInvoice(): Promise<void> {
+    this.invoice = {
+      customerId: this.selectedCustomerId,
+      lineItems: this.lineItems,
+      createdOn: new Date(),
+      updatedOn: new Date()
+    };
+    await invoiceService.makeNewInvoice(this.invoice);
+  }
+
   finalizeOrder() {
     this.invoiceStep = 3;
   }
-
-
 
   async created(): Promise<void> {
     await this.initialize();

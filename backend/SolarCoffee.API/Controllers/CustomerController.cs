@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using SolarCoffee.API.Serialization;
 using SolarCoffee.API.ViewModels;
 using SolarCoffee.Services.Customer;
+using System;
+using System.Linq;
 
 namespace SolarCoffee.API.Controllers
 {
@@ -55,7 +51,7 @@ namespace SolarCoffee.API.Controllers
             if (!ModelState.IsValid)
                return BadRequest(ModelState);
                
-            _logger.LogInformation("Generating invoice");
+            _logger.LogInformation("Generating customer");
 
             customer.CreatedOn = DateTime.UtcNow;
             customer.UpdatedOn = DateTime.UtcNow;

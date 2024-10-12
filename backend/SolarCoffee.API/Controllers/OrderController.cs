@@ -33,7 +33,7 @@ namespace SolarCoffee.API.Controllers
             
         }
 
-        [HttpPost("/invoice")]
+        [HttpPost("invoice")]
         public IActionResult GenerateNewOrder([FromBody] InvoiceModel invoice)
         {
             if (!ModelState.IsValid)
@@ -46,7 +46,7 @@ namespace SolarCoffee.API.Controllers
             return Ok(order);
         }
 
-        [HttpPatch("/complete/{id}:int")]
+        [HttpPatch("complete/{id}:int")]
         public IActionResult MarkOrderComplete(int id)
         {
             _logger.LogInformation($"Marking order {id} complete...");

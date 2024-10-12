@@ -56,7 +56,7 @@
         }
 
         &:disabled {
-            background: lighten($solar-blue, 15%);
+            background: lighten(gray, 10%);
             border-bottom: 2px solid darken($solar-blue, 20%);
         }
 

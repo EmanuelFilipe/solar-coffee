@@ -27,6 +27,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Logging.AddFilter("Logs/myapp-{Date}.txt");
 
+// torna o nome dos endpoints no swagger em minúsculo
+builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
