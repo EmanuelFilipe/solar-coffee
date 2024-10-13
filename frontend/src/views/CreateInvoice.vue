@@ -91,7 +91,7 @@
           <h3>1337 Solar Lane</h3>
           <h3>San Somewhere, CA 90000</h3>
           <h3>USA</h3>
-
+        </div>
           <div class="invoice-order-list" v-if="lineItems.length">
             <div class="invoice-header">
               <h3>Invoice: {{ new Date() | formatDate }}</h3>
@@ -120,38 +120,37 @@
               </h3>
             </div>
             <table class="table">
-                <thead>
-                    <th>Product</th>
-                    <th>Description</th>
-                    <th>Qty.</th>
-                    <th>Price</th>
-                    <th>Subtotal</th>
-                </thead>
-                <tbody>
-                    <tr v-for="li in lineItems" :key="`index_${li?.product?.id}`">
-                        <td>{{ li?.product?.name }}</td>
-                        <td>{{ li?.product?.description }}</td>
-                        <td>{{ li.quantity }}</td>
-                        <td>{{ li?.product?.price }}</td>
-                        <td>
-                          {{ ((li?.product?.price ?? 0) * Number(li.quantity)) | price }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th>Grand Total</th>
-                    </tr>
-                    <tfoot>
-                        <tr>
-                          <td colspan="4" class="due">Balance due upon receipt:</td>
-                          <td class="price-final">{{ runningTotal | price }}</td>
-                        </tr>
-                    </tfoot>
-                </tbody>
+              <thead>
+                  <th>Product</th>
+                  <th>Description</th>
+                  <th>Qty.</th>
+                  <th>Price</th>
+                  <th>Subtotal</th>
+              </thead>
+              <tbody>
+                  <tr v-for="li in lineItems" :key="`index_${li?.product?.id}`">
+                      <td>{{ li?.product?.name }}</td>
+                      <td>{{ li?.product?.description }}</td>
+                      <td>{{ li.quantity }}</td>
+                      <td>{{ li?.product?.price }}</td>
+                      <td>
+                        {{ ((li?.product?.price ?? 0) * Number(li.quantity)) | price }}
+                      </td>
+                  </tr>
+                  <tr>
+                      <th colspan="4"></th>
+                      <th>Grand Total</th>
+                  </tr>
+                  <tfoot>
+                      <tr>
+                        <td colspan="4" class="due">Balance due upon receipt:</td>
+                        <td class="price-final">{{ runningTotal | price }}</td>
+                      </tr>
+                  </tfoot>
+              </tbody>
             </table>
           </div>
         </div>
-      </div>
     </div>
     <hr />
     <div class="invoice-steps-actions">
@@ -176,6 +175,8 @@ import { InvoiceService } from "../../services/invoice-service";
 import { Component, Vue } from "vue-property-decorator";
 import SolarButton from "@/components/SolarButton.vue";
 import FiltersMixin from "../mixins/filters";
+import jsPDF from "jspdf";
+import html2canvas from 'html2canvas'
 
 const customerService = new CustomerService();
 const inventoryService = new InventoryService();
@@ -306,6 +307,35 @@ export default class CreateInvoice extends Vue {
       updatedOn: new Date()
     };
     await invoiceService.makeNewInvoice(this.invoice);
+
+    this.downloadPDF()
+    await this.$router.push("/orders")
+  }
+
+  /** 
+   * ‘p’: Define a orientação do documento. ‘p’ significa portrait (retrato), ‘l’ para landscape (paisagem).
+     ‘pt’: Define a unidade de medida. ‘pt’ significa points (pontos), ‘mm’ (milímetros), ‘cm’ (centímetros) e ‘in’ (polegadas).
+     ‘a4’: Define o formato do papel. ‘a4’ é um tamanho de papel padrão. ‘letter’, ‘legal’, entre outros.
+     true: Este parâmetro é opcional e define se a compressão deve ser usadatrue ativa a compressão, o que pode reduzir o tamanho do arquivo PDF
+  */
+  downloadPDF() {
+    let pdf = new jsPDF('p', 'pt', 'a4', true);
+    let invoice = document.getElementById('invoice');
+
+    if (invoice) {
+      html2canvas(invoice).then(canvas => {
+        let image = canvas.toDataURL("image/png");
+
+        // Ajuste a escala da imagem para caber na página A4
+        let imgWidth = 595.28; // Largura da página A4 em pontos
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(image, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save('invoice.pdf');
+      });
+    } else {
+      console.error("Elemento 'invoice' não encontrado.");
+    }
   }
 
   finalizeOrder() {

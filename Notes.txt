@@ -18,3 +18,6 @@ ex: make migrations mname=ProductInventorySales
 
 - rodando db -> que é o update
 make db
+
+- install jspdf
+npm i jspdf --save
