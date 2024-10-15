@@ -30,8 +30,7 @@ namespace SolarCoffee.Services.Customer
         /// <returns>Customer</returns>
         public Infrastructure.Models.Customer GetById(int id)
         {
-             return _context.Customers.AsNoTracking()
-                                      .Where(p => p.Id == id)
+             return _context.Customers.Where(p => p.Id == id)
                                       .FirstOrDefault();
         }
 

@@ -29,8 +29,7 @@ namespace SolarCoffee.Services.Product
         /// <returns></returns>
         public Infrastructure.Models.Product GetById(int id)
         {
-            return _context.Products.AsNoTracking()
-                                    .Where(p => p.Id == id)
+            return _context.Products.Where(p => p.Id == id)
                                     .FirstOrDefault();
         }
         

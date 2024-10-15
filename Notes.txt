@@ -21,3 +21,8 @@ make db
 
 - install jspdf
 npm i jspdf --save
+
+- chart
+fazer download do .exe pelo site: https://apexcharts.com/
+ou 
+https://apexcharts.com/docs/vue-charts/

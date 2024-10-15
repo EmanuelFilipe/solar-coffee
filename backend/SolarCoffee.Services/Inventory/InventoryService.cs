@@ -24,8 +24,7 @@ namespace SolarCoffee.Services.Inventory
         /// <returns>ProductInventory</returns>
         public ProductInventory GetById(int id)
         {
-            return _context.ProductInventories.AsNoTracking()
-                                              .Include(pi => pi.Product)
+            return _context.ProductInventories.Include(pi => pi.Product)
                                               .FirstOrDefault(pi => pi.Product.Id == id);
         }
 
