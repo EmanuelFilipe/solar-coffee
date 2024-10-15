@@ -1,5 +1,5 @@
 import { BaseService } from './base-service'
-import { IInvoice } from '../src/types/Invoice'
+import { IInvoice } from '../types/Invoice'
 
 export class InvoiceService extends BaseService {
     public async makeNewInvoice(invoice: IInvoice): Promise<boolean> {

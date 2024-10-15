@@ -1,6 +1,6 @@
 import { BaseService } from './base-service'
-import { IServiceResponse } from '../src/types/ServiceResponse'
-import { ICustomer } from '../src/types/Customer'
+import { IServiceResponse } from '../types/ServiceResponse'
+import { ICustomer } from '../types/Customer'
 
 /**
  * Customer Service

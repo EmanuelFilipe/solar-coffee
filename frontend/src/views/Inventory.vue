@@ -65,8 +65,8 @@ import SolarButton from "../components/SolarButton.vue";
 import NewProductModal from "../components/modals/NewProductModel.vue";
 import ShipmentModal from "../components/modals/ShipmentModal.vue";
 import { IShipment } from "../types/Shipment";
-import { InventoryService } from '../../services/inventory-service'
-import { ProductService } from '../../services/product-service'
+import { InventoryService } from '../services/inventory-service'
+import { ProductService } from '../services/product-service'
 
 const inventoryService = new InventoryService()
 const productService = new ProductService()

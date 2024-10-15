@@ -168,12 +168,12 @@
 <script lang="ts">
 import { ICustomer } from "../types/Customer";
 import { IInvoice, ILineItem } from "../types/Invoice";
-import { IProductInventory } from "@/types/Product";
-import { CustomerService } from "../../services/customer-service";
-import { InventoryService } from "../../services/inventory-service";
-import { InvoiceService } from "../../services/invoice-service";
+import { IProductInventory } from "../types/Product";
+import { CustomerService } from "../services/customer-service";
+import { InventoryService } from '../services/inventory-service'
+import { InvoiceService } from "../services/invoice-service";
 import { Component, Vue } from "vue-property-decorator";
-import SolarButton from "@/components/SolarButton.vue";
+import SolarButton from "../components/SolarButton.vue";
 import FiltersMixin from "../mixins/filters";
 import jsPDF from "jspdf";
 import html2canvas from 'html2canvas'

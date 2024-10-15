@@ -1,4 +1,4 @@
-import { IProduct } from '../src/types/Product'
+import { IProduct } from '../types/Product'
 import { BaseService } from './base-service'
 
 export class ProductService extends BaseService {

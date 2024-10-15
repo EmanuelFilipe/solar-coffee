@@ -42,7 +42,7 @@
 import { ICustomer } from "../types/Customer";
 import SolarButton from "../components/SolarButton.vue";
 import { Component, Vue } from "vue-property-decorator";
-import { CustomerService } from '../../services/customer-service'
+import { CustomerService } from '../services/customer-service'
 import NewCustomerModal from '../components/modals/NewCustomerModal.vue'
 
 const customerService = new CustomerService()
