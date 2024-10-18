@@ -4,6 +4,7 @@ import Inventory from '@/views/Inventory.vue'
 import Customers from '@/views/Customers.vue'
 import CreateInvoice from '@/views/CreateInvoice.vue'
 import Orders from '@/views/Orders.vue'
+import Charts from '@/views/Charts.vue'
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,11 @@ const routes: Array<RouteConfig> = [
     path: '/orders',
     name: 'Orders',
     component: Orders
+  },
+  {
+    path: '/charts',
+    name: 'Charts',
+    component: Charts
   },
 ]
 

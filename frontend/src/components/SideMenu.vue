@@ -31,6 +31,12 @@
         >
             Orders
         </solar-button>
+        <solar-button id="menuOrders"
+            :isFullWidth="true"
+            @button:click="goToRoute('/charts')"
+        >
+            Charts Tests
+        </solar-button>
     </div>
 </template>
 

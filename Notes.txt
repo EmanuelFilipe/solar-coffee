@@ -23,6 +23,9 @@ make db
 npm i jspdf --save
 
 - chart
-fazer download do .exe pelo site: https://apexcharts.com/
-ou 
 https://apexcharts.com/docs/vue-charts/
+
+install the Vue-ApexCharts component in your Vue 2.0 application from npm
+npm install --save apexcharts
+npm install --save vue-apexcharts
+

@@ -1,6 +1,7 @@
 import { IProductInventory } from '@/types/Product';
 import { IShipment } from '@/types/Shipment';
 import { BaseService } from './base-service'
+import { IInventoryTimeline } from '@/types/InventoryGraph';
 
 /**
  * Inventory Service
@@ -26,5 +27,15 @@ export class InventoryService extends BaseService {
         console.error('Error updating inventory:', error);
         throw error;
       }
+    }
+
+    public async getSnapshotHistory(): Promise<IInventoryTimeline> {
+      try {
+        let result = await this.http.get('/inventory/snapshot')
+        return result.data
+      } catch (error) {
+        console.error('Error getting snapshot history:', error);
+        throw error;
+      } 
     }
 }
