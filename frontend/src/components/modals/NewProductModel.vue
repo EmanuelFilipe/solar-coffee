@@ -28,7 +28,7 @@
                 <solar-button type="button" aria-label="save new item" @button:click="save">
                     Save Product
                 </solar-button>
-                <solar-button type="button" aria-label="Close modal" @button:click="close">
+                <solar-button type="button" aria-label="close modal" @button:click="close">
                     Close
                 </solar-button>
             </template>

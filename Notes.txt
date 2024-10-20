@@ -29,3 +29,6 @@ install the Vue-ApexCharts component in your Vue 2.0 application from npm
 npm install --save apexcharts
 npm install --save vue-apexcharts
 
+- Cypress
+npm i cypress --dev
+npx cypress open
